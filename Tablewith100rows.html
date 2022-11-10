@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>100 Rows</title>
+    <style>
+         @media (max-width:1000px) {
+            .main-container {
+                width: 100%;
+                height: 100%;
+            }
+            nav {
+            width: 100%;
+            padding: 0px 100px;
+            }
+            table {
+                width: 40%
+            }
+            button {
+            height: 30px;
+            width: 140px;
+        }
+        }
+
+        @media (max-width:700px) {
+            
+            .main-container {
+                width: 70%;
+                height: 100%;
+            }
+            nav {
+            width: 100%;
+            padding: 0px 80px;
+            }
+
+            table {
+                width: 30%
+            }
+            button {
+            height: 30px;
+            width: 90px;
+            font-size: 10px;
+        }
+
+        }
+
+        @media (max-width:500px) {
+            .main-container {
+                width: 50%;
+                height: 100%;
+            }
+            nav {
+            width: 100%;
+            padding: 0px 60px;
+            }
+
+            table {
+                width: 20%
+            }
+            button {
+            height: 25px;
+            width: 70px;
+            font-size: 10px;
+        }
+
+        }
+        .main-container {
+            width: 100%;
+            height: 100%;
+        }
+        nav {
+            display: block;
+            width: 100%;
+            height: 75px;
+            padding: 0px 100px;
+            background-color: black;
+        }
+
+        nav .logo p {
+            font-size: 25px;
+            color: white;
+            float: left;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        th {
+            color: rgb(50, 58, 215);
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0px;
+            margin-bottom: 100px;
+        }
+
+        .table-box {
+            margin: auto;
+        }
+
+        table,
+        th,
+        td,
+        tbody {
+            border: 2px solid black;
+            width: 35%;
+        }
+
+        th {
+            background-color: grey;
+        }
+
+        .buttons {
+            margin-top: 2%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            margin-left: 300px;
+        }
+
+        button {
+            height: 30px;
+            width: 140px;
+        }
+
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        
+
+        .openButton {
+            border: none;
+            border-radius: 10px;
+            background-color: #1c87c9;
+            color: white;
+            padding: 7px 20px;
+            cursor: pointer;
+            height: 30px;
+        }
+
+        .deleteButton {
+            background-color: #1c87c9;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 2px;
+            margin-left: 4px;
+            margin-right: 100px;
+        }
+
+        .loginPopup {
+            position: relative;
+            text-align: center;
+            width: 100%;
+        }
+
+        .formPopup {
+            display: none;
+            position: fixed;
+            left: 45%;
+            top: 5%;
+            transform: translate(-50%, 5%);
+            border: 3px solid #999999;
+            z-index: 9;
+        }
+
+        .formContainer {
+            max-width: 500px;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .formContainer input[type=text],
+        .formContainer input[type=number],
+        .formContainer input[type=email] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 20px 0;
+            border: none;
+            background: #eee;
+        }
+
+        .formContainer input[type=text]:focus,
+        .formContainer input[type=number]:focus,
+        .formContainer input[type=email]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        .formContainer .btn {
+            padding: 10px 15px;
+            border: none;
+            background-color: #8ebf42;
+            color: #fff;
+            cursor: pointer;
+            width: 50%;
+            margin-bottom: 12px;
+            opacity: 0.8;
+            margin-top: 15px;
+        }
+
+
+        .formContainer .cancel {
+            background-color: #cc0000;
+        }
+
+        .formContainer .btn:hover,
+        .openButton:hover {
+            opacity: 1;
+        }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(15, 15, 15);
+            color: white;
+            text-align: center;
+        }
+
+        .footer p {
+            align-items: center;
+            color: white;
+        }
+    </style>
+</head>
+
+<body onload="color();">
+    <div class="main-container">
+        <nav>
+            <div class="logo">
+                <p>Crystalline</p>
+            </div>
+            </nav>
+        <div class="buttons">
+            <button class="openButton" onclick="openForm()">Add Row</button>
+            <button class="deleteButton" onclick="deleteRow()" id="deleteBtn">Delete</button>
+        </div>
+
+        <div class="table-box">
+            <table class="table table-striped" id="tableId">
+                <tr class="bg-info">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Result</th>
+                    <th>File</th>
+                </tr>
+
+                <tbody id="myTable">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="formPopup" id="popupForm">
+            <form class="formContainer" id="result-form" onsubmit="closeForm()">
+                <h2>Student Information</h2>
+                <label for="fullname">
+                    <strong>Full Name</strong>
+                </label>
+                <input type="text" placeholder="Full Name" name="fullname" id="fullname" required>
+                <label for="email">
+                    <strong>E-mail</strong>
+                </label>
+                <input type="email" placeholder="Email" name="email" id="email" required>
+                <label for="result">
+                    <strong>Result</strong>
+                </label>
+                <input type="number" placeholder="Result" name="result" id="result" required>
+                <label for="result">
+                    <strong>File</strong>
+                </label>
+                <input type="file" placeholder="File" name="File" id="file" required>
+                <button type="submit" class="btn">Submit</button>
+                <button type="cancel" class="btn cancel" onclick="closeForm()">Cancel</button>
+            </form>
+        </div>
+
+
+        <script>
+            var myArray = [
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Michael', 'email': 'michael@gmail.com', 'Result': '93', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Mila', 'email': 'mila@gmail.com', 'Result': '76', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Paul', 'email': 'Paul@gmail.com', 'Result': '47', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Dennis', 'email': 'Dennis@gmail.com', 'Result': '33', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Tim', 'email': 'Tim@gmail.com', 'Result': '60', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Erik', 'email': 'Erik@gmail.com', 'Result': '58', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Jorge', 'email': 'Jorge@gmail.com', 'Result': '87', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'John', 'email': 'John@gmail.com', 'Result': '99', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Olive', 'email': 'Olive@gmail.com', 'Result': '66', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' },
+                { 'name': 'Emily', 'email': 'Emily@gmail.com', 'Result': '78', 'file': 'C:\Users\Akhila\Pictures\Screenshots\sample.png' }
+            ]
+
+            buildTable(myArray)
+
+            function buildTable(data) {
+                var table = document.getElementById('myTable')
+
+                for (var i = 0; i < data.length; i++) {
+                    var row = `<tr>
+                                        <td>${data[i].name}</td>
+                                        <td>${data[i].email}</td>
+                                        <td>${data[i].Result}</td>
+                                        <td>${data[i].file}</td>
+                                  </tr>`
+                    table.innerHTML += row
+
+
+                }
+            }
+            function color() {
+
+                let getTds = document.querySelectorAll('table td')
+
+                getTds.forEach(function (row) {
+                    if (row.textContent >= 90) {
+                        row.style.background = 'green';
+                    }
+                    else if (row.textContent >= 60 && row.textContent < 90) {
+                        row.style.background = 'yellow';
+                    }
+                    else if (row.textContent > 0 && row.textContent <= 40) {
+                        row.style.background = 'red';
+                    }
+                    else {
+                        row.style.background = 'white';
+                    }
+                })
+            }
+
+
+            function openForm() {
+                document.getElementById("popupForm").style.display = "block";
+            }
+            function closeForm() {
+                document.getElementById("popupForm").style.display = "none";
+            }
+            
+
+            const forml = document.querySelector("form");
+            const tbodyl = document.querySelector("tbody");
+            const tablel = document.querySelector("table");
+            function onAddWebsite(e) {
+                e.preventDefault();
+                const fullname = document.getElementById("fullname").value;
+                const email = document.getElementById("email").value;
+                const result = document.getElementById("result").value;
+                const file = document.getElementById("file").value;
+               myArray.push({name:fullname,email:email,Result:result,file:file});
+               buildTable(myArray);
+                color();
+                document.getElementById("result-form").reset();
+            }
+            function deleteRow() {
+                myArray.pop({name:fullname,email:email,Result:result,file:file});
+                buildTable(myArray);
+            }  
+        
+    
+            
+
+            forml.addEventListener("submit", onAddWebsite);
+            object.addEventListener("load", color);
+
+        </script>
+         <div class="footer">
+            <footer>
+                <p>Copyright @ 2022 Crystalline Software Solutions Pvt.ltd</p>
+            </footer>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
